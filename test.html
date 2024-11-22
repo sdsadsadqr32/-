@@ -133,7 +133,7 @@
 
                 <!-- 서술형 문제 추가 -->
                 <div class="question">
-                    <p>3. 태환이의 강아지 인형 이름 3개를 대시오</p>
+                    <p>3. 당신의 가장 좋아하는 색깔은 무엇인가요?</p>
                     <textarea name="q3" rows="4" cols="50" placeholder="서술형 답안을 입력하세요"></textarea>
                 </div>
 
@@ -158,8 +158,8 @@
             // 답안을 선택했을 때 오른쪽 사이드에 선택된 답안을 표시하는 기능
             document.querySelectorAll('.omr-option input').forEach(option => {
                 option.addEventListener('change', (event) => {
-                    const questionNo = event.target.name;
-                    const selectedAnswer = event.target.nextElementSibling.innerText;
+                    const questionNo = event.target.name.slice(1); // "q1" -> "1"
+                    const selectedAnswer = event.target.nextElementSibling.innerText.split(')')[1].trim();
                     const selectedAnswersList = document.getElementById('selectedAnswers');
 
                     let listItem = document.getElementById(`answer_${questionNo}`);
@@ -167,10 +167,10 @@
                     if (!listItem) {
                         listItem = document.createElement('li');
                         listItem.id = `answer_${questionNo}`;
-                        listItem.innerHTML = `<strong>${questionNo}번: </strong>${selectedAnswer}`;
+                        listItem.innerHTML = `${questionNo}번: ${selectedAnswer}`;
                         selectedAnswersList.appendChild(listItem);
                     } else {
-                        listItem.innerHTML = `<strong>${questionNo}번: </strong>${selectedAnswer}`;
+                        listItem.innerHTML = `${questionNo}번: ${selectedAnswer}`;
                     }
                 });
             });
@@ -179,15 +179,15 @@
             const textarea = document.querySelector('textarea[name="q3"]');
             textarea.addEventListener('input', (event) => {
                 const selectedAnswersList = document.getElementById('selectedAnswers');
-                let listItem = document.getElementById('answer_q3');
+                let listItem = document.getElementById('answer_3');
                 
                 if (!listItem) {
                     listItem = document.createElement('li');
-                    listItem.id = 'answer_q3';
-                    listItem.innerHTML = `<strong>3번: </strong>${event.target.value}`;
+                    listItem.id = 'answer_3';
+                    listItem.innerHTML = `3번: ${event.target.value}`;
                     selectedAnswersList.appendChild(listItem);
                 } else {
-                    listItem.innerHTML = `<strong>3번: </strong>${event.target.value}`;
+                    listItem.innerHTML = `3번: ${event.target.value}`;
                 }
             });
         });
