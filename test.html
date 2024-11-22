@@ -1,10 +1,87 @@
 <!DOCTYPE html>
 <html lang="ko">
+
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2024탼프능력고사</title>
     <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        display: flex;
+        flex-wrap: wrap; /* 모바일 환경에서 컨텐츠를 아래로 쌓음 */
+        width: 90%; /* 모바일 화면에서도 적절한 여백 */
+        margin: 20px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .left-side, .right-side {
+        width: 100%; /* 기본적으로 모바일에서 전체 너비 사용 */
+        max-height: none; /* 모바일에서는 고정 높이 제한 제거 */
+        overflow-y: auto;
+        margin-bottom: 20px;
+    }
+
+    /* 데스크톱 환경에서는 분할 */
+    @media (min-width: 768px) {
+        .container {
+            flex-wrap: nowrap; /* 데스크톱 환경에서는 옆으로 나열 */
+        }
+        .left-side {
+            width: 70%;
+            max-height: 500px;
+        }
+        .right-side {
+            width: 28%;
+            border-left: 2px solid #ddd;
+            padding-left: 20px;
+            max-height: 500px;
+        }
+    }
+
+    /* 버튼과 입력 필드 */
+    textarea {
+        width: calc(100% - 20px); /* 모바일에서 화면 너비를 가득 채움 */
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    .submit-btn {
+        display: block;
+        width: 100%; /* 모바일 화면에서는 버튼이 화면 너비만큼 차지 */
+        font-size: 18px;
+    }
+
+    /* 모바일 화면에서 리스트 간격 조정 */
+    .selected-answers li {
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+
+    /* 문제 및 답안 간격 */
+    .question {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+    .answer-options label {
+        font-size: 16px;
+    }
+
+    /* 스크롤 영역 */
+    .left-side, .right-side {
+        border: none; /* 모바일에서 여백과 혼동 방지 */
+        box-shadow: none;
+    }
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -142,14 +219,14 @@
                 <!-- Question 4 -->
                 <div class="question">
                     <p>4. 다음은 듣기 평가 문제입니다. 오디오를 잘 듣고 질문에 대한 태환의 답을 골라주세요. (듣기평가)</p>
-                                     <!-- 숨겨진 비디오 플레이어 -->
-                    <video id="videoPlayer" style="display: none;" controls>
-                        <source src="https://example.com/converted-audio.mp4" type="video/mp4">
-                        브라우저가 동영상을 지원하지 않습니다. <a href="https://example.com/converted-audio.mp4">소리 다운로드</a>.
-                    </video>
-                
                     <!-- 재생 버튼 -->
-                    <button type="button" onclick="playAudio()">소리 재생</button>
+                        <button type="button" onclick="playAudio()">오디오 재생</button>
+
+                        <!-- 오디오 요소 (숨김 처리) -->
+                        <audio id="audioPlayer" style="display: none;">
+                            <source src="https://x.com/vanner_namu/status/1827767216932270568?t=zK7PG8KI7w8OshFXp_yA7g&s=19" type="audio/mp3">
+                            브라우저가 오디오 요소를 지원하지 않습니다. <a href="https://x.com/vanner_namu/status/1827767216932270568?t=zK7PG8KI7w8OshFXp_yA7g&s=19">오디오 파일 다운로드</a>.
+                        </audio>
                     <div class="answer-options">
                         <div class="omr-option">
                             <input type="radio" name="q4" value="1" id="q4_1">
