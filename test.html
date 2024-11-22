@@ -1,42 +1,43 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2024탼프능력고사</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <title>기출문제</title>
+    <script th:src="@{/js/exam.js}"></script>
+    <script></script>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
+            background-color: #75b798;
         }
         .container {
-            width: 80%;
-            margin: 50px auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
         }
-        h1 {
-            text-align: center;
+        table {
+            width: 100%;
+            background-color: white;
         }
         .question {
-            font-size: 18px;
-            margin-bottom: 20px;
+            padding: 10px;
         }
         .omr-options {
-            display: inline-flex;
-            gap: 20px;
-            margin-left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding-left: 20px;
         }
         .omr-option {
             display: flex;
             align-items: center;
         }
         .omr-option input[type="radio"] {
-            margin-right: 5px;
+            margin-right: 10px;
+        }
+        .side-choice {
+            font-size: 30px;
+            padding-left: 20px;
         }
         .submit-btn {
             background-color: #4CAF50;
@@ -45,8 +46,7 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            display: block;
-            margin: 30px auto;
+            margin-top: 20px;
         }
         .submit-btn:hover {
             background-color: #45a049;
@@ -54,58 +54,70 @@
     </style>
 </head>
 <body>
-
-    <div class="container">
-        <h1>2024탼프능력고사</h1>
-
-        <form action="submit_test.php" method="POST">
-            <div class="question">
-                <p>1. 태환이의 생년월일은?</p>
-                <div class="omr-options">
-                    <div class="omr-option">
-                        <input type="radio" name="q1" value="a">
-                        <label>941004</label>
+    <div class="container" id="content">
+        <table class="table table-bordered" style="margin-top: 100px;">
+            <tr>
+                <td colspan="2" style="height: 200px; padding: 10px;">
+                    <!-- 버튼 -->
+                    <div style="text-align: right; margin-bottom: 5px;">
+                        <button type="button" class="btn btn-primary btn-lg" th:onclick="|location.href='@{/exam}'|">돌아가기</button>
+                        <button type="button" class="btn btn-danger btn-lg" id="finishBtn">시험종료</button>
                     </div>
-                    <div class="omr-option">
-                        <input type="radio" name="q1" value="b">
-                        <label>940115</label>
+                    <!-- header -->
+                    <ul class="list-group" id="header">
+                        <li class="list-group-item" style="border: 0px;">
+                            <h3 th:if="${examQuestions[0].examCategory == 1}"
+                                th:text="|${examQuestions[0].subjectName} (${examQuestions[0].grade}학년) ${examQuestions[0].departmentName} ${examQuestions[0].examYear}년도 ${examQuestions[0].semester}학기 기말시험|"></h3>
+                            <h3 th:if="${examQuestions[0].examCategory == 2}"
+                                th:text="|${examQuestions[0].subjectName} (${examQuestions[0].grade}학년) ${examQuestions[0].departmentName} ${examQuestions[0].examYear}년도 ${examQuestions[0].semester}학기 계절학기(동계)|"></h3>
+                            <h3 th:if="${examQuestions[0].examCategory == 3}"
+                                th:text="|${examQuestions[0].subjectName} (${examQuestions[0].grade}학년) ${examQuestions[0].departmentName} ${examQuestions[0].examYear}년도 ${examQuestions[0].semester}학기 계절학기(하계)|"></h3>
+                        </li>
+                        <li class="list-group-item" style="text-align: right; border: 0px;">
+                            <span>소요시간 : </span>
+                            <span id="loadTime" style="color: red;">Time...</span>
+                        </li>
+                        <li class="list-group-item" id="remainingQuestions" style="text-align: right; border: 0px;">
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="2" style="width: 1000px; height: 600px;">
+                    <!-- 문제 -->
+                    <div style="height: 600px; overflow: auto;">
+                        <ul class="list-group" th:each="examQuestion : ${examQuestions}" style="padding: 10px;">
+                            <li class="list-group-item question" th:text="|${examQuestion.questionNo}. ${examQuestion.question}|">문제번호. 문제</li>
+                            <div class="omr-options">
+                                <div class="omr-option">
+                                    <input class="form-check-input" type="radio" th:name="|choice_${examQuestion.questionNo}|" th:id="|choice_${examQuestion.questionNo}_1|">
+                                    <label class="form-check-label" th:for="|choice_${examQuestion.questionNo}_1|">⓵ [[${examQuestion.choice1}]]</label>
+                                </div>
+                                <div class="omr-option">
+                                    <input class="form-check-input" type="radio" th:name="|choice_${examQuestion.questionNo}|" th:id="|choice_${examQuestion.questionNo}_2|">
+                                    <label class="form-check-label" th:for="|choice_${examQuestion.questionNo}_2|">⓶ [[${examQuestion.choice2}]]</label>
+                                </div>
+                                <div class="omr-option">
+                                    <input class="form-check-input" type="radio" th:name="|choice_${examQuestion.questionNo}|" th:id="|choice_${examQuestion.questionNo}_3|">
+                                    <label class="form-check-label" th:for="|choice_${examQuestion.questionNo}_3|">⓷ [[${examQuestion.choice3}]]</label>
+                                </div>
+                                <div class="omr-option">
+                                    <input class="form-check-input" type="radio" th:name="|choice_${examQuestion.questionNo}|" th:id="|choice_${examQuestion.questionNo}_4|">
+                                    <label class="form-check-label" th:for="|choice_${examQuestion.questionNo}_4|">⓸ [[${examQuestion.choice4}]]</label>
+                                </div>
+                            </div>
+                        </ul>
                     </div>
-                    <div class="omr-option">
-                        <input type="radio" name="q1" value="c">
-                        <label>040115</label>
+                </td>
+                <td style="width: 200px; height: 600px;">
+                    <div id="sideChoice" style="height: 600px; overflow: auto; font-size: 30px;">
+                        <!-- 사이드 메뉴 옵션 -->
                     </div>
-                    <div class="omr-option">
-                        <input type="radio" name="q1" value="d">
-                        <label>041004</label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="question">
-                <p>2. 다음 중 태환이가 탼단지에서 부르지 않은 곡은?</p>
-                <div class="omr-options">
-                    <div class="omr-option">
-                        <input type="radio" name="q2" value="a">
-                        <label>ㅇ</label>
-                    </div>
-                    <div class="omr-option">
-                        <input type="radio" name="q2" value="b">
-                        <label>ㅇ</label>
-                    </div>
-                    <div class="omr-option">
-                        <input type="radio" name="q2" value="c">
-                        <label>ㅇ</label>
-                    </div>
-                    <div class="omr-option">
-                        <input type="radio" name="q2" value="d">
-                        <label>ㅇ</label>
-                    </div>
-                </div>
-            </div>
-
-            <button type="submit" class="submit-btn">제출</button>
-        </form>
+                </td>
+            </tr>
+        </table>
     </div>
 
+    <button type="button" class="submit-btn">제출</button>
 </body>
 </html>
