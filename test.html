@@ -48,16 +48,16 @@
             <div class="question">
                 <label>1. 태환의 생일은?</label>
                 <div>
-                    <input type="radio" id="q1a" name="q1" value="HyperText Markup Language">
-                    <label for="q1a">HyperText Markup Language</label>
+                    <input type="radio" id="q1a" name="q1" value="12월 25일">
+                    <label for="q1a">12월 25일</label>
                 </div>
                 <div>
-                    <input type="radio" id="q1b" name="q1" value="HyperTool Markup Language">
-                    <label for="q1b">HyperTool Markup Language</label>
+                    <input type="radio" id="q1b" name="q1" value="1월 1일">
+                    <label for="q1b">1월 1일</label>
                 </div>
                 <div>
-                    <input type="radio" id="q1c" name="q1" value="HyperText Makeup Language">
-                    <label for="q1c">HyperText Makeup Language</label>
+                    <input type="radio" id="q1c" name="q1" value="7월 15일">
+                    <label for="q1c">7월 15일</label>
                 </div>
             </div>
 
@@ -100,31 +100,34 @@
             const form = document.getElementById('examForm');
             const formData = new FormData(form);
 
-            let result = "제출된 답변:\n";
-            for (const [key, value] of formData.entries()) {
-                result += `${key}: ${value}\n`;
+            // 정답 정의
+            const answers = {
+                q1: "12월 25일", // 문제 1 정답
+                q2: "골든리트리버", // 문제 2 정답
+                q3: ["쌀국수", "마라탕"] // 문제 3 정답
+            };
+
+            // 점수 계산
+            let score = 0;
+            if (formData.get('q1') === answers.q1) score++;
+            if (formData.get('q2')?.trim() === answers.q2) score++;
+            const selectedQ3 = formData.getAll('q3');
+            if (
+                selectedQ3.length === answers.q3.length &&
+                selectedQ3.every(answer => answers.q3.includes(answer))
+            ) score++;
+
+            // 닉네임 가져오기
+            const nickname = prompt("닉네임을 입력하세요:");
+            if (!nickname) {
+                alert("닉네임을 입력해야 합니다.");
+                return;
             }
 
-            alert(result); // 결과 출력 (실제 사용 시 서버로 전송 가능)
-        }
-    </script>
-</body>
-</html>
-
-  fetch('https://example.com/submit', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ nickname, score }),
-            })
-            .then(response => response.json())
-            .then(() => {
-                // 결과 페이지로 이동
-                window.location.href = `result.html?nickname=${nickname}&score=${score}`;
-            })
-            .catch(err => {
-                alert('서버에 점수를 저장하는 중 오류가 발생했습니다.');
-                console.error(err);
-            });
+            // 결과 페이지로 이동
+            window.location.href = `result.html?nickname=${encodeURIComponent(
+                nickname
+            )}&score=${score}`;
         }
     </script>
 </body>
