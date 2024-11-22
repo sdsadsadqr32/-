@@ -133,7 +133,7 @@
 
                 <!-- 서술형 문제 추가 -->
                 <div class="question">
-                    <p>3. 당신의 가장 좋아하는 색깔은 무엇인가요?</p>
+                    <p>3. 태환의 고향 이름은?</p>
                     <textarea name="q3" rows="4" cols="50" placeholder="서술형 답안을 입력하세요"></textarea>
                 </div>
 
@@ -162,15 +162,15 @@
                     const selectedAnswer = event.target.nextElementSibling.innerText.split(')')[1].trim();
                     const selectedAnswersList = document.getElementById('selectedAnswers');
 
-                    let listItem = document.getElementById(`answer_${questionNo}`);
-                    
-                    if (!listItem) {
-                        listItem = document.createElement('li');
+                    // 항상 번호 순으로 답안을 고정하여 추가
+                    const existingAnswer = document.getElementById(`answer_${questionNo}`);
+                    if (!existingAnswer) {
+                        const listItem = document.createElement('li');
                         listItem.id = `answer_${questionNo}`;
                         listItem.innerHTML = `${questionNo}번: ${selectedAnswer}`;
                         selectedAnswersList.appendChild(listItem);
                     } else {
-                        listItem.innerHTML = `${questionNo}번: ${selectedAnswer}`;
+                        existingAnswer.innerHTML = `${questionNo}번: ${selectedAnswer}`;
                     }
                 });
             });
