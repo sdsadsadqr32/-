@@ -38,6 +38,16 @@
         .side-choice {
             font-size: 30px;
             padding-left: 20px;
+            border-left: 2px solid #ccc;
+            height: 600px;
+            overflow: auto;
+        }
+        .selected-answer {
+            background-color: #e0f7fa;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            font-weight: bold;
         }
         .submit-btn {
             background-color: #4CAF50;
@@ -110,8 +120,8 @@
                     </div>
                 </td>
                 <td style="width: 200px; height: 600px;">
-                    <div id="sideChoice" style="height: 600px; overflow: auto; font-size: 30px;">
-                        <!-- 사이드 메뉴 옵션 -->
+                    <div id="sideChoice" class="side-choice">
+                        <!-- 선택된 답안 목록 -->
                     </div>
                 </td>
             </tr>
@@ -119,5 +129,19 @@
     </div>
 
     <button type="button" class="submit-btn">제출</button>
+
+    <script>
+        document.addEventListener('change', (event) => {
+            if (event.target.matches('input[type="radio"]')) {
+                const questionNo = event.target.name.split('_')[1];
+                const selectedAnswer = event.target.nextElementSibling.textContent.trim();
+                const sideChoiceDiv = document.getElementById('sideChoice');
+                const answerItem = document.createElement('div');
+                answerItem.className = 'selected-answer';
+                answerItem.textContent = `문제 ${questionNo}: ${selectedAnswer}`;
+                sideChoiceDiv.appendChild(answerItem);
+            }
+        });
+    </script>
 </body>
 </html>
