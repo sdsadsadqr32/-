@@ -383,5 +383,39 @@
         });
     </script>
 
+    <button type="button" onclick="submitTest()" class="submit-btn">제출</button>
+</div>
+
+<script>
+   // 답안 검증 및 점수 계산
+
+       // 답안 체크 (각 문제의 정답이 "1", "2", "3", "4"에 해당하는 경우)
+       // 여기서 답안이 맞으면 점수를 1점씩 추가
+       if (document.querySelector('input[name="q1"]:checked').value === '1') {
+           score++;
+       }
+       if (document.querySelector('input[name="q2"]:checked').value === '2') {
+           score++;
+       }
+       if (document.querySelector('input[name="q6"]:checked').value === '1') {
+           score++;
+       }
+       if (document.querySelector('input[name="q7"]:checked').value === '2') {
+           score++;
+       }
+
+       // 서술형 문제 답안 체크
+       if (document.querySelector('textarea[name="q3"]').value.trim() !== "") {
+           score++;  // 예시로 서술형 문제도 점수 처리
+       }
+
+       // 결과 페이지로 점수와 닉네임 전달
+       window.location.href = `result.html?score=${score}&nickname=${nickname}`;
+   }
+</script>
+
+</body>
+</html>
+
 </body>
 </html>
