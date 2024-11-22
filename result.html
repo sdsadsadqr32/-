@@ -146,7 +146,9 @@
             <h3>선택한 답안</h3>
             <div class="selected-answers">
                 <ul id="selectedAnswers">
-                    <!-- 선택된 답안이 여기에 표시됩니다 -->
+                    <li id="answer_1">1번: </li>
+                    <li id="answer_2">2번: </li>
+                    <li id="answer_3">3번: </li>
                 </ul>
             </div>
         </div>
@@ -162,16 +164,9 @@
                     const selectedAnswer = event.target.nextElementSibling.innerText.split(')')[1].trim();
                     const selectedAnswersList = document.getElementById('selectedAnswers');
 
-                    // 항상 번호 순으로 답안을 고정하여 추가
-                    const existingAnswer = document.getElementById(`answer_${questionNo}`);
-                    if (!existingAnswer) {
-                        const listItem = document.createElement('li');
-                        listItem.id = `answer_${questionNo}`;
-                        listItem.innerHTML = `${questionNo}번: ${selectedAnswer}`;
-                        selectedAnswersList.appendChild(listItem);
-                    } else {
-                        existingAnswer.innerHTML = `${questionNo}번: ${selectedAnswer}`;
-                    }
+                    // 해당 번호에 맞게 답안을 표시
+                    const listItem = document.getElementById(`answer_${questionNo}`);
+                    listItem.innerHTML = `${questionNo}번: ${selectedAnswer}`;
                 });
             });
 
