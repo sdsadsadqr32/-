@@ -3,32 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>시험 결과</title>
+    <title>2024탼프능력고사</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .left-side {
+            width: 70%;
+        }
+        .right-side {
+            width: 28%;
+            border-left: 2px solid #ddd;
+            padding-left: 20px;
+            height: 600px;
+            overflow-y: auto;
+        }
+        .question {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .answer-options {
+            margin-bottom: 20px;
+        }
+        .answer-options label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        .omr-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .omr-option input {
+            margin-right: 10px;
+        }
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+        .selected-answers {
+            font-size: 18px;
+        }
+        .selected-answers ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .selected-answers li {
+            margin-bottom: 10px;
+        }
+        .answer-number {
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-    <div style="text-align: center; margin-top: 50px;">
-        <h1>시험 결과</h1>
-        <p id="result"></p>
-        <button onclick="restart()">다시 시작하기</button>
+
+    <div class="container">
+        <!-- Left side for questions -->
+        <div class="left-side">
+            <h1>2024탼프능력고사</h1>
+
+            <form action="submit_test.php" method="POST">
+                <!-- Question 1 -->
+                <div class="question">
+                    <p>1. 태환이의 생년월일은?</p>
+                    <div class="answer-options">
+                        <div class="omr-option">
+                            <input type="radio" name="q1" value="1" id="q1_1">
+                            <label for="q1_1">1) 941004</label>
+                        </div>
+                        <div class="omr-option">
+                            <input type="radio" name="q1" value="2" id="q1_2">
+                            <label for="q1_2">2) 940115</label>
+                        </div>
+                        <div class="omr-option">
+                            <input type="radio" name="q1" value="3" id="q1_3">
+                            <label for="q1_3">3) 040115</label>
+                        </div>
+                        <div class="omr-option">
+                            <input type="radio" name="q1" value="4" id="q1_4">
+                            <label for="q1_4">4) 041004</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="question">
+                    <p>2. 다음 중 태환이가 탼단지에서 부르지 않은 곡은?</p>
+                    <div class="answer-options">
+                        <div class="omr-option">
+                            <input type="radio" name="q2" value="1" id="q2_1">
+                            <label for="q2_1">1) ㅇ</label>
+                        </div>
+                        <div class="omr-option">
+                            <input type="radio" name="q2" value="2" id="q2_2">
+                            <label for="q2_2">2) ㅇ</label>
+                        </div>
+                        <div class="omr-option">
+                            <input type="radio" name="q2" value="3" id="q2_3">
+                            <label for="q2_3">3) ㅇ</label>
+                        </div>
+                        <div class="omr-option">
+                            <input type="radio" name="q2" value="4" id="q2_4">
+                            <label for="q2_4">4) ㅇ</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 서술형 문제 추가 -->
+                <div class="question">
+                    <p>3. 당신의 가장 좋아하는 색깔은 무엇인가요?</p>
+                    <textarea name="q3" rows="4" cols="50" placeholder="서술형 답안을 입력하세요"></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">제출</button>
+            </form>
+        </div>
+
+        <!-- Right side for displaying selected answers -->
+        <div class="right-side">
+            <h3>선택한 답안</h3>
+            <div class="selected-answers">
+                <ul id="selectedAnswers">
+                    <!-- 선택된 답안이 여기에 표시됩니다 -->
+                </ul>
+            </div>
+        </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const nickname = urlParams.get('nickname');
-            const score = urlParams.get('score');
+        // DOMContentLoaded 이벤트로 페이지 로드 후 스크립트 실행
+        document.addEventListener('DOMContentLoaded', function() {
+            // 답안을 선택했을 때 오른쪽 사이드에 선택된 답안을 표시하는 기능
+            document.querySelectorAll('.omr-option input').forEach(option => {
+                option.addEventListener('change', (event) => {
+                    const questionNo = event.target.name.slice(1); // "q1" -> "1"
+                    const selectedAnswer = event.target.nextElementSibling.innerText.split(')')[1].trim();
+                    const selectedAnswersList = document.getElementById('selectedAnswers');
 
-            if (!nickname || !score) {
-                document.getElementById('result').innerText = '결과를 불러오는 중 오류가 발생했습니다.';
-            } else {
-                document.getElementById('result').innerHTML = `닉네임: <strong>${nickname}</strong><br>점수: <strong>${score}점</strong>`;
-            }
+                    // 항상 번호 순으로 답안을 고정하여 추가
+                    const existingAnswer = document.getElementById(`answer_${questionNo}`);
+                    if (!existingAnswer) {
+                        const listItem = document.createElement('li');
+                        listItem.id = `answer_${questionNo}`;
+                        listItem.innerHTML = `${questionNo}번: ${selectedAnswer}`;
+                        selectedAnswersList.appendChild(listItem);
+                    } else {
+                        existingAnswer.innerHTML = `${questionNo}번: ${selectedAnswer}`;
+                    }
+                });
+            });
+
+            // 서술형 답안 처리 (제출 전 표시)
+            const textarea = document.querySelector('textarea[name="q3"]');
+            textarea.addEventListener('input', (event) => {
+                const selectedAnswersList = document.getElementById('selectedAnswers');
+                let listItem = document.getElementById('answer_3');
+                
+                if (!listItem) {
+                    listItem = document.createElement('li');
+                    listItem.id = 'answer_3';
+                    listItem.innerHTML = `3번: ${event.target.value}`;
+                    selectedAnswersList.appendChild(listItem);
+                } else {
+                    listItem.innerHTML = `3번: ${event.target.value}`;
+                }
+            });
         });
-
-        function restart() {
-            localStorage.removeItem('nickname');
-            window.location.href = 'index.html';
-        }
     </script>
+
 </body>
 </html>
