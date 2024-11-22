@@ -19,16 +19,24 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+        h1 {
+            text-align: center;
+        }
         .question {
             font-size: 18px;
-            margin-bottom: 10px;
-        }
-        .answer-options {
             margin-bottom: 20px;
         }
-        .answer-options label {
-            display: block;
-            margin-bottom: 8px;
+        .omr-options {
+            display: inline-flex;
+            gap: 20px;
+            margin-left: 20px;
+        }
+        .omr-option {
+            display: flex;
+            align-items: center;
+        }
+        .omr-option input[type="radio"] {
+            margin-right: 5px;
         }
         .submit-btn {
             background-color: #4CAF50;
@@ -37,6 +45,8 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            display: block;
+            margin: 30px auto;
         }
         .submit-btn:hover {
             background-color: #45a049;
@@ -51,37 +61,45 @@
         <form action="submit_test.php" method="POST">
             <div class="question">
                 <p>1. 태환이의 생년월일은?</p>
-                <div class="answer-options">
-                    <label>
-                        <input type="radio" name="q1" value="a"> 941004
-                    </label>
-                    <label>
-                        <input type="radio" name="q1" value="b"> 940115
-                    </label>
-                    <label>
-                        <input type="radio" name="q1" value="c"> 040115
-                    </label>
-                    <label>
-                        <input type="radio" name="q1" value="d"> 041004
-                    </label>
+                <div class="omr-options">
+                    <div class="omr-option">
+                        <input type="radio" name="q1" value="a">
+                        <label>941004</label>
+                    </div>
+                    <div class="omr-option">
+                        <input type="radio" name="q1" value="b">
+                        <label>940115</label>
+                    </div>
+                    <div class="omr-option">
+                        <input type="radio" name="q1" value="c">
+                        <label>040115</label>
+                    </div>
+                    <div class="omr-option">
+                        <input type="radio" name="q1" value="d">
+                        <label>041004</label>
+                    </div>
                 </div>
             </div>
 
             <div class="question">
                 <p>2. 다음 중 태환이가 탼단지에서 부르지 않은 곡은?</p>
-                <div class="answer-options">
-                    <label>
-                        <input type="radio" name="q2" value="a"> ㅇ
-                    </label>
-                    <label>
-                        <input type="radio" name="q2" value="b"> ㅇ
-                    </label>
-                    <label>
-                        <input type="radio" name="q2" value="c"> ㅇ
-                    </label>
-                    <label>
-                        <input type="radio" name="q2" value="d"> ㅇ
-                    </label>
+                <div class="omr-options">
+                    <div class="omr-option">
+                        <input type="radio" name="q2" value="a">
+                        <label>ㅇ</label>
+                    </div>
+                    <div class="omr-option">
+                        <input type="radio" name="q2" value="b">
+                        <label>ㅇ</label>
+                    </div>
+                    <div class="omr-option">
+                        <input type="radio" name="q2" value="c">
+                        <label>ㅇ</label>
+                    </div>
+                    <div class="omr-option">
+                        <input type="radio" name="q2" value="d">
+                        <label>ㅇ</label>
+                    </div>
                 </div>
             </div>
 
