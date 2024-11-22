@@ -1,173 +1,93 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>탼프 능력 시험평가</title>
+    <title>온라인 테스트</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            background-color: #F5F6CE;
-        }
-        header, footer {
-            background-color: #F5F6CE;
-            color: white;
-            text-align: center;
-            padding: 15px 0;
-        }
-        h1 {
-            color: black; /* h1 제목을 검정색으로 변경 */
         }
         .container {
-            display: flex;
-            flex: 1;
-            flex-direction: row;
-            justify-content: space-between;
+            width: 80%;
+            margin: 50px auto;
+            background-color: #fff;
             padding: 20px;
-        }
-        .left, .right {
-            width: 10%;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         .question {
-            margin: 20px 0;
+            font-size: 18px;
+            margin-bottom: 10px;
         }
-        .question img {
-            max-width: 100%;
-            height: auto;
+        .answer-options {
+            margin-bottom: 20px;
         }
-        button {
+        .answer-options label {
             display: block;
-            width: 100%;
-            padding: 10px;
-            background-color: #F5F6CE;
+            margin-bottom: 8px;
+        }
+        .submit-btn {
+            background-color: #4CAF50;
             color: white;
+            padding: 10px 20px;
             border: none;
+            border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
         }
-        button:hover {
-            background-color: #F5F6CE;
-        }
-        }
-        .right {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #F5F6CE;
-            font-size: 30px;
-            color: #F5F6CE;
+        .submit-btn:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>탼프 능력고사</h1>
-    </header>
 
     <div class="container">
-        <div class="left">
-            <form id="examForm">
-                <!-- 문제 1 (객관식) -->
-                <div class="question">
-                    <label>1. 태환의 생년월일은?</label>
-                    <div>
-                        <input type="radio" id="q1a" name="q1" value="941004">
-                        <label for="q1a">941004</label>
-                    </div>
-                    <div>
-                        <input type="radio" id="q1b" name="q1" value="040115">
-                        <label for="q1b">040115</label>
-                    </div>
-                    <div>
-                        <input type="radio" id="q1c" name="q1" value="940115">
-                        <label for="q1c">940115</label>
-                    </div>
+        <h1>온라인 테스트</h1>
+
+        <form action="submit_test.php" method="POST">
+            <div class="question">
+                <p>1. 웹 개발에서 HTML의 주요 목적은 무엇인가요?</p>
+                <div class="answer-options">
+                    <label>
+                        <input type="radio" name="q1" value="a"> 사용자 인터페이스 디자인
+                    </label>
+                    <label>
+                        <input type="radio" name="q1" value="b"> 웹 페이지 구조 정의
+                    </label>
+                    <label>
+                        <input type="radio" name="q1" value="c"> 서버 관리
+                    </label>
+                    <label>
+                        <input type="radio" name="q1" value="d"> 데이터베이스 연결
+                    </label>
                 </div>
+            </div>
 
-                <!-- 문제 2 (이미지 포함) -->
-                <div class="question">
-                    <label>2. 다음 강아지 이름은?</label>
-                    <img src="https://www.ikea.com/kr/ko/images/products/gosig-golden-soft-toy-dog-golden-retriever__0710169_pe727372_s5.jpg" alt="문제 이미지">
-                    <div>
-                        <input type="text" id="q2" name="q2" placeholder="정답을 입력하세요">
-                    </div>
+            <div class="question">
+                <p>2. CSS는 무엇을 제어하나요?</p>
+                <div class="answer-options">
+                    <label>
+                        <input type="radio" name="q2" value="a"> 웹 페이지의 구조
+                    </label>
+                    <label>
+                        <input type="radio" name="q2" value="b"> 웹 페이지의 스타일
+                    </label>
+                    <label>
+                        <input type="radio" name="q2" value="c"> 웹 페이지의 기능
+                    </label>
+                    <label>
+                        <input type="radio" name="q2" value="d"> 데이터 처리
+                    </label>
                 </div>
+            </div>
 
-                <!-- 문제 3 (체크박스) -->
-                <div class="question">
-                    <label>3. 태환이 안먹는 것을 모두 선택하세요:</label>
-                    <div>
-                        <input type="checkbox" id="q3a" name="q3" value="쌀국수">
-                        <label for="q3a">쌀국수</label>
-                    </div>
-                    <div>
-                        <input type="checkbox" id="q3b" name="q3" value="마라탕">
-                        <label for="q3b">마라탕</label>
-                    </div>
-                    <div>
-                        <input type="checkbox" id="q3c" name="q3" value="칼국수">
-                        <label for="q3c">칼국수</label>
-                    </div>
-                    <div>
-                        <input type="checkbox" id="q3d" name="q3" value="떡볶이">
-                        <label for="q3d">떡볶이</label>
-                    </div>
-                </div>
-
-                <button type="button" onclick="submitExam()">시험 제출</button>
-            </form>
-        </div>
-
-        <div class="right">
-            <!-- 오른쪽에 123을 표시 -->
-            <p>123</p>
-        </div>
+            <button type="submit" class="submit-btn">제출</button>
+        </form>
     </div>
 
-    <footer>
-        <p>수고하셨습니다.</p>
-    </footer>
-
-    <script>
-        function submitExam() {
-            const form = document.getElementById('examForm');
-            const formData = new FormData(form);
-
-            // 정답 정의
-            const answers = {
-                q1: "940115", // 문제 1 정답
-                q2: "룽지", // 문제 2 정답
-                q3: ["쌀국수", "마라탕"] // 문제 3 정답
-            };
-
-            // 점수 계산
-            let score = 0;
-            if (formData.get('q1') === answers.q1) score++;
-            if (formData.get('q2')?.trim() === answers.q2) score++;
-            const selectedQ3 = formData.getAll('q3');
-            if (
-                selectedQ3.length === answers.q3.length &&
-                selectedQ3.every(answer => answers.q3.includes(answer))
-            ) score++;
-
-            // 닉네임 가져오기 (localStorage 사용)
-            const nickname = localStorage.getItem("nickname");
-            if (!nickname) {
-                alert("닉네임이 없습니다. 처음 페이지로 돌아갑니다.");
-                window.location.href = "index.html";
-                return;
-            }
-
-            // 결과 페이지로 이동
-            window.location.href = `result.html?nickname=${encodeURIComponent(
-                nickname
-            )}&score=${score}`;
-        }
-    </script>
 </body>
 </html>
