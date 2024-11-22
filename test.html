@@ -117,6 +117,13 @@
                 selectedQ3.every(answer => answers.q3.includes(answer))
             ) score++;
 
+ // 닉네임 가져오기 (localStorage 사용)
+            const nickname = localStorage.getItem("nickname");
+            if (!nickname) {
+                alert("닉네임이 없습니다. 처음 페이지로 돌아갑니다.");
+                window.location.href = "index.html";
+                return;
+            }
 
             // 결과 페이지로 이동
             window.location.href = `result.html?nickname=${encodeURIComponent(
