@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>시험 결과</title>
+</head>
+<body>
+    <div style="text-align: center; margin-top: 50px;">
+        <h1>시험 결과</h1>
+        <p id="result"></p>
+        <button onclick="restart()">다시 시작하기</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const nickname = urlParams.get('nickname');
+            const score = urlParams.get('score');
+
+            if (!nickname || !score) {
+                document.getElementById('result').innerText = '결과를 불러오는 중 오류가 발생했습니다.';
+            } else {
+                document.getElementById('result').innerHTML = `닉네임: <strong>${nickname}</strong><br>점수: <strong>${score}점</strong>`;
+            }
+        });
+
+        function restart() {
+            localStorage.removeItem('nickname');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
