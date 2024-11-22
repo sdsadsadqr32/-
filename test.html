@@ -117,12 +117,6 @@
                 selectedQ3.every(answer => answers.q3.includes(answer))
             ) score++;
 
-            // 닉네임 가져오기
-            const nickname = prompt("닉네임을 입력하세요:");
-            if (!nickname) {
-                alert("닉네임을 입력해야 합니다.");
-                return;
-            }
 
             // 결과 페이지로 이동
             window.location.href = `result.html?nickname=${encodeURIComponent(
