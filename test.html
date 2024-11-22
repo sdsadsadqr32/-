@@ -146,23 +146,26 @@
     </div>
 
     <script>
-        // 답안을 선택했을 때 오른쪽 사이드에 선택된 답안을 표시하는 기능
-        document.querySelectorAll('.omr-option input').forEach(option => {
-            option.addEventListener('change', (event) => {
-                const questionNo = event.target.name;
-                const selectedAnswer = event.target.nextElementSibling.innerText;
-                const selectedAnswersList = document.getElementById('selectedAnswers');
+        // DOMContentLoaded 이벤트로 페이지 로드 후 스크립트 실행
+        document.addEventListener('DOMContentLoaded', function() {
+            // 답안을 선택했을 때 오른쪽 사이드에 선택된 답안을 표시하는 기능
+            document.querySelectorAll('.omr-option input').forEach(option => {
+                option.addEventListener('change', (event) => {
+                    const questionNo = event.target.name;
+                    const selectedAnswer = event.target.nextElementSibling.innerText;
+                    const selectedAnswersList = document.getElementById('selectedAnswers');
 
-                let listItem = document.getElementById(`answer_${questionNo}`);
-                
-                if (!listItem) {
-                    listItem = document.createElement('li');
-                    listItem.id = `answer_${questionNo}`;
-                    listItem.innerHTML = `<strong>${questionNo}: </strong>${selectedAnswer}`;
-                    selectedAnswersList.appendChild(listItem);
-                } else {
-                    listItem.innerHTML = `<strong>${questionNo}: </strong>${selectedAnswer}`;
-                }
+                    let listItem = document.getElementById(`answer_${questionNo}`);
+                    
+                    if (!listItem) {
+                        listItem = document.createElement('li');
+                        listItem.id = `answer_${questionNo}`;
+                        listItem.innerHTML = `<strong>${questionNo}: </strong>${selectedAnswer}`;
+                        selectedAnswersList.appendChild(listItem);
+                    } else {
+                        listItem.innerHTML = `<strong>${questionNo}: </strong>${selectedAnswer}`;
+                    }
+                });
             });
         });
     </script>
