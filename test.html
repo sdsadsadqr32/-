@@ -110,3 +110,22 @@
     </script>
 </body>
 </html>
+
+  fetch('https://example.com/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nickname, score }),
+            })
+            .then(response => response.json())
+            .then(() => {
+                // 결과 페이지로 이동
+                window.location.href = `result.html?nickname=${nickname}&score=${score}`;
+            })
+            .catch(err => {
+                alert('서버에 점수를 저장하는 중 오류가 발생했습니다.');
+                console.error(err);
+            });
+        }
+    </script>
+</body>
+</html>
