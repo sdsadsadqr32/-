@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>닉네임 입력</title>
+</head>
+<body>
+    <div style="text-align: center; margin-top: 50px;">
+        <h1>시험을 시작합니다</h1>
+        <p>닉네임을 입력하세요:</p>
+        <input type="text" id="nickname" placeholder="닉네임" />
+        <button onclick="startExam()">시작하기</button>
+    </div>
+
+    <script>
+        function startExam() {
+            const nickname = document.getElementById('nickname').value.trim();
+            if (!nickname) {
+                alert('닉네임을 입력하세요.');
+                return;
+            }
+            // 닉네임을 로컬 스토리지에 저장
+            localStorage.setItem('nickname', nickname);
+            // 시험지 페이지로 이동
+            window.location.href = 'test.html';
+        }
+    </script>
+</body>
+</html>
