@@ -12,12 +12,24 @@
             padding: 0;
         }
         .container {
+            display: flex;
+            justify-content: space-between;
             width: 80%;
             margin: 50px auto;
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .left-side {
+            width: 70%;
+        }
+        .right-side {
+            width: 28%;
+            border-left: 2px solid #ddd;
+            padding-left: 20px;
+            height: 600px;
+            overflow-y: auto;
         }
         .question {
             font-size: 18px;
@@ -30,6 +42,14 @@
             display: block;
             margin-bottom: 8px;
         }
+        .omr-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .omr-option input {
+            margin-right: 10px;
+        }
         .submit-btn {
             background-color: #4CAF50;
             color: white;
@@ -37,57 +57,115 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            margin-top: 20px;
         }
         .submit-btn:hover {
             background-color: #45a049;
+        }
+        .selected-answers {
+            font-size: 18px;
+        }
+        .selected-answers ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .selected-answers li {
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>2024탼프능력고사</h1>
+        <!-- Left side for questions -->
+        <div class="left-side">
+            <h1>2024탼프능력고사</h1>
 
-        <form action="submit_test.php" method="POST">
-            <div class="question">
-                <p>1. 태환이의 생년월일은?</p>
-                <div class="answer-options">
-                    <label>
-                        <input type="radio" name="q1" value="a"> 941004
-                    </label>
-                    <label>
-                        <input type="radio" name="q1" value="b"> 940115
-                    </label>
-                    <label>
-                        <input type="radio" name="q1" value="c"> 040115
-                    </label>
-                    <label>
-                        <input type="radio" name="q1" value="d"> 041004
-                    </label>
+            <form action="submit_test.php" method="POST">
+                <!-- Question 1 -->
+                <div class="question">
+                    <p>1. 태환이의 생년월일은?</p>
+                    <div class="answer-options">
+                        <div class="omr-option">
+                            <input type="radio" name="q1" value="a" id="q1_a">
+                            <label for="q1_a">941004</label>
+                        </div>
+                        <div class="omr-option">
+                            <input type="radio" name="q1" value="b" id="q1_b">
+                            <label for="q1_b">940115</label>
+                        </div>
+                        <div class="omr-option">
+                            <input type="radio" name="q1" value="c" id="q1_c">
+                            <label for="q1_c">040115</label>
+                        </div>
+                        <div class="omr-option">
+                            <input type="radio" name="q1" value="d" id="q1_d">
+                            <label for="q1_d">041004</label>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="question">
-                <p>2. 다음 중 태환이가 탼단지에서 부르지 않은 곡은?</p>
-                <div class="answer-options">
-                    <label>
-                        <input type="radio" name="q2" value="a"> ㅇ
-                    </label>
-                    <label>
-                        <input type="radio" name="q2" value="b"> ㅇ
-                    </label>
-                    <label>
-                        <input type="radio" name="q2" value="c"> ㅇ
-                    </label>
-                    <label>
-                        <input type="radio" name="q2" value="d"> ㅇ
-                    </label>
+                <!-- Question 2 -->
+                <div class="question">
+                    <p>2. 다음 중 태환이가 탼단지에서 부르지 않은 곡은?</p>
+                    <div class="answer-options">
+                        <div class="omr-option">
+                            <input type="radio" name="q2" value="a" id="q2_a">
+                            <label for="q2_a">ㅇ</label>
+                        </div>
+                        <div class="omr-option">
+                            <input type="radio" name="q2" value="b" id="q2_b">
+                            <label for="q2_b">ㅇ</label>
+                        </div>
+                        <div class="omr-option">
+                            <input type="radio" name="q2" value="c" id="q2_c">
+                            <label for="q2_c">ㅇ</label>
+                        </div>
+                        <div class="omr-option">
+                            <input type="radio" name="q2" value="d" id="q2_d">
+                            <label for="q2_d">ㅇ</label>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-            <button type="submit" class="submit-btn">제출</button>
-        </form>
+                <!-- Add more questions here (Question 3 to Question 10) -->
+                
+                <button type="submit" class="submit-btn">제출</button>
+            </form>
+        </div>
+
+        <!-- Right side for displaying selected answers -->
+        <div class="right-side">
+            <h3>선택한 답안</h3>
+            <div class="selected-answers">
+                <ul id="selectedAnswers">
+                    <!-- 선택된 답안이 여기에 표시됩니다 -->
+                </ul>
+            </div>
+        </div>
     </div>
 
+    <script>
+        // 답안을 선택했을 때 오른쪽 사이드에 선택된 답안을 표시하는 기능
+        document.querySelectorAll('.omr-option input').forEach(option => {
+            option.addEventListener('change', (event) => {
+                const questionNo = event.target.name;
+                const selectedAnswer = event.target.nextElementSibling.innerText;
+                const selectedAnswersList = document.getElementById('selectedAnswers');
+
+                let listItem = document.getElementById(`answer_${questionNo}`);
+                
+                if (!listItem) {
+                    listItem = document.createElement('li');
+                    listItem.id = `answer_${questionNo}`;
+                    listItem.innerHTML = `<strong>${questionNo}: </strong>${selectedAnswer}`;
+                    selectedAnswersList.appendChild(listItem);
+                } else {
+                    listItem.innerHTML = `<strong>${questionNo}: </strong>${selectedAnswer}`;
+                }
+            });
+        });
+    </script>
+
 </body>
-</html> 
+</html>
